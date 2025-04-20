@@ -1,9 +1,14 @@
-# Node.js dependencies
+# Node
 node_modules/
-
-# Environment variables
+dist/
+build/
 .env
-
-# Logs
 *.log
 
+# IDEs
+.vscode/
+.DS_Store
+
+# Vite / Next / React
+.next/
+out/
