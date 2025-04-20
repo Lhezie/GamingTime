@@ -102,7 +102,7 @@ function WaitingRoom({ socket, session, player, setView, setQuestion }) {
   return (
     <Fade in timeout={500} style={{ backgroundColor: "" }}>
       <Paper elevation={6} sx={{ p: 4, mt: 4, borderRadius: 4, background: 'linear-gradient(to right, #a0b1db, #f0f4ff)' }} component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        {/* UI Elements Unchanged */}
+        
         <Typography variant="h6" fontWeight={700} color="primary" gutterBottom textAlign={'center'} fontStyle={'italic'}>
           Waiting Room
         </Typography>

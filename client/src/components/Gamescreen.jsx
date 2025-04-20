@@ -1,4 +1,4 @@
-// client/src/components/GameScreen.js
+
 import React, { useState } from 'react';
 import {
   Box,

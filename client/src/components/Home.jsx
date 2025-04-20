@@ -1,4 +1,4 @@
-// client/src/components/Home.js
+
 import React, { useState } from 'react';
 import {
   Box,

@@ -1,4 +1,4 @@
-// guessing-game-server/index.js
+
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -12,7 +12,7 @@ const io = new Server(server, {
   }
 });
 
-const sessions = {}; // sessionId -> session object
+const sessions = {}; 
 
 function createPlayer(name) {
   return {
