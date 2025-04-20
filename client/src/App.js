@@ -7,6 +7,8 @@ import Home from "./components/Home";
 import WaitingRoom from "./components/WaitingRoom.jsx";
 import GameScreen from "./components/Gamescreen.jsx";
 import ResultScreen from "./components/ResultScreen.jsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const socket = io("http://localhost:3000");
 
@@ -52,6 +54,7 @@ function App() {
   }, []);
 
   return (
+    <>
     <ThemeProvider theme={theme}>
       <Box
         sx={{
@@ -104,8 +107,10 @@ function App() {
             <ResultScreen result={gameResult} setView={setView} />
           )}
         </Container>
-      </Box>
-    </ThemeProvider>
+        </Box>
+        <ToastContainer position="top-center" autoClose={3000} />
+      </ThemeProvider>
+      </>
   );
 }
 
