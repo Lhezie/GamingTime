@@ -129,6 +129,12 @@ io.on('connection', (socket) => {
       io.to(session.id).emit('session-updated', session);
     }
   });
+
+  // ✅ Real-time chat feature
+  socket.on('chat-message', ({ sessionId, sender, text }) => {
+    if (!sessionId || !text || !sender) return;
+    io.to(sessionId).emit('chat-message', { sender, text });
+  });
 });
 
 server.listen(3000, () => {
