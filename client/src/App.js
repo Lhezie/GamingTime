@@ -9,7 +9,7 @@ import GameScreen from "./components/Gamescreen.jsx";
 import ResultScreen from "./components/ResultScreen.jsx";
 
 
-const socket = io(process.env.NEXT_PUBLIC_API_BASE_URL);
+const socket = io(process.env.REACT_APP_SERVER_URL || "http://localhost:4000" );
 
 const theme = createTheme({
   palette: {
