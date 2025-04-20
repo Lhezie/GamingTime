@@ -9,7 +9,6 @@ import GameScreen from "./components/Gamescreen.jsx";
 import ResultScreen from "./components/ResultScreen.jsx";
 
 
-
 const socket = io(process.env.NEXT_PUBLIC_API_BASE_URL);
 
 const theme = createTheme({
@@ -108,7 +107,7 @@ function App() {
           )}
         </Container>
         </Box>
-        <ToastContainer position="top-center" autoClose={3000} />
+       
       </ThemeProvider>
       </>
   );

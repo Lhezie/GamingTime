@@ -11,7 +11,7 @@ const io = new Server(server, {
   }
 });
 
-const sessions = {}; // sessionId -> session object
+const sessions = {};
 
 function createPlayer(name) {
   return {
@@ -36,7 +36,7 @@ function createSession(gameMaster) {
     startTime: null,
     winnerId: null,
     timer: null,
-    chat: [] // ✅ Chat history array
+    chat: [] 
   };
   sessions[sessionId] = session;
   return session;
@@ -73,7 +73,7 @@ io.on('connection', (socket) => {
 
     cb({ session, player });
 
-    // ✅ Send existing chat history to the newly joined player
+    //Send existing chat history to the newly joined player
     socket.emit('chat-history', session.chat);
 
     io.to(session.id).emit('session-updated', session);
@@ -139,16 +139,16 @@ io.on('connection', (socket) => {
     }
   });
 
-  // ✅ Chat handling
+  //Chat handling
   socket.on('chat-message', (msg) => {
     const session = sessions[msg.sessionId];
     if (!session) return;
 
-    session.chat.push(msg); // ✅ Store message in session
+    session.chat.push(msg); 
     io.to(msg.sessionId).emit('chat-message', msg);
   });
 });
 
-server.listen(3000, () => {
-  console.log('Guessing Game server listening on http://localhost:3000');
+server.listen(4000, () => {
+  console.log('Guessing Game server listening on http://localhost:4000');
 });
