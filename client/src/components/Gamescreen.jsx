@@ -27,7 +27,7 @@ function GameScreen({ socket, session, player, question }) {
   });
 
   return (
-    <Fade in timeout={500}>
+    <Fade in timeout={500} style={{background: 'linear-gradient(to right, #a0b1db, #f0f4ff)' }}>
       <Paper elevation={4} sx={{ p: 4, mt: 4 }} component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Typography variant="h5" gutterBottom>
           Guess the Answer

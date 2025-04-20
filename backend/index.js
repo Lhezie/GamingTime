@@ -1,4 +1,3 @@
-
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -12,7 +11,7 @@ const io = new Server(server, {
   }
 });
 
-const sessions = {}; 
+const sessions = {}; // sessionId -> session object
 
 function createPlayer(name) {
   return {
@@ -36,7 +35,8 @@ function createSession(gameMaster) {
     status: 'waiting',
     startTime: null,
     winnerId: null,
-    timer: null
+    timer: null,
+    chat: [] // ✅ Chat history array
   };
   sessions[sessionId] = session;
   return session;
@@ -65,11 +65,17 @@ io.on('connection', (socket) => {
     if (!session || session.status !== 'waiting') {
       return cb({ error: 'Cannot join session now' });
     }
+
     const player = createPlayer(name);
     session.players.push(player);
     socket.join(session.id);
     socket.data.playerId = player.id;
+
     cb({ session, player });
+
+    // ✅ Send existing chat history to the newly joined player
+    socket.emit('chat-history', session.chat);
+
     io.to(session.id).emit('session-updated', session);
   });
 
@@ -81,6 +87,7 @@ io.on('connection', (socket) => {
     session.answer = answer.toLowerCase();
     session.startTime = Date.now();
     session.players.forEach(p => (p.attemptsLeft = 3));
+
     io.to(sessionId).emit('game-started', { question });
 
     session.timer = setTimeout(() => {
@@ -101,6 +108,7 @@ io.on('connection', (socket) => {
     if (!player || player.attemptsLeft <= 0 || session.status !== 'in-progress') return;
 
     player.attemptsLeft--;
+
     if (guess.toLowerCase() === session.answer && !session.winnerId) {
       session.winnerId = player.id;
       session.status = 'ended';
@@ -120,6 +128,7 @@ io.on('connection', (socket) => {
   socket.on('leave-session', () => {
     const session = getSessionByPlayerId(socket.data.playerId);
     if (!session) return;
+
     session.players = session.players.filter(p => p.id !== socket.data.playerId);
     socket.leave(session.id);
 
@@ -130,10 +139,13 @@ io.on('connection', (socket) => {
     }
   });
 
-  // ✅ Real-time chat feature
-  socket.on('chat-message', ({ sessionId, sender, text }) => {
-    if (!sessionId || !text || !sender) return;
-    io.to(sessionId).emit('chat-message', { sender, text });
+  // ✅ Chat handling
+  socket.on('chat-message', (msg) => {
+    const session = sessions[msg.sessionId];
+    if (!session) return;
+
+    session.chat.push(msg); // ✅ Store message in session
+    io.to(msg.sessionId).emit('chat-message', msg);
   });
 });
 

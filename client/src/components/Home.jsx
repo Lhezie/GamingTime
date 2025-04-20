@@ -36,13 +36,13 @@ function Home({ socket, setView, setSession, setPlayer }) {
   };
 
   return (
-    <Fade in timeout={500}>
+    <Fade in timeout={500} style={{background: 'linear-gradient(to right, #a0b1db, #f0f4ff)' }}>
       <Paper elevation={4} sx={{ p: 4, mt: 4 }} component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Typography variant="h5" gutterBottom>
           Join or Create a Game
         </Typography>
 
-        <Stack spacing={2}>
+        <Stack spacing={1}>
           <TextField
             label="Your Name"
             variant="outlined"
@@ -50,6 +50,12 @@ function Home({ socket, setView, setSession, setPlayer }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+          <Box display="flex" justifyContent="end">
+          <Button variant="contained" color="primary" onClick={handleCreate}>
+              Create Game
+            </Button>
+          </Box>
+         <h1 style={{fontStyle:"italic", fontSize:'8px', color:"red"}}>input both name and id to join</h1>
           <TextField
             label="Session ID (to join)"
             variant="outlined"
@@ -60,9 +66,7 @@ function Home({ socket, setView, setSession, setPlayer }) {
           {error && <Typography color="error">{error}</Typography>}
 
           <Box display="flex" justifyContent="space-between">
-            <Button variant="contained" color="primary" onClick={handleCreate}>
-              Create Game
-            </Button>
+            
             <Button variant="outlined" color="secondary" onClick={handleJoin}>
               Join Game
             </Button>
